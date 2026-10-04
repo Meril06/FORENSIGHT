@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:16
+    container_name: forensight-db
+    environment:
+      POSTGRES_USER: forensight
+      POSTGRES_PASSWORD: forensight_dev
+      POSTGRES_DB: forensight
+    ports:
+      -  "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Every .sql file in this folder runs automatically on FIRST startup only
+      - ../apps/api/db:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  pgdata:
